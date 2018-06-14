@@ -13,6 +13,15 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Lykke.AlgoStore.Service.Logging.AzureRepositories\Lykke.AlgoStore.Service.Logging.AzureRepositories.csproj" />
+    <ProjectReference Include="..\..\src\Lykke.AlgoStore.Service.Logging\Lykke.AlgoStore.Service.Logging.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Lykke.AzureStorage">
+      <HintPath>..\..\..\..\..\..\Users\joksa\.nuget\packages\lykke.azurestorage\8.4.1\lib\netstandard2.0\Lykke.AzureStorage.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
 </Project>
