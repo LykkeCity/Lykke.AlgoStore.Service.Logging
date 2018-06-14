@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutoFixture;
 using AutoMapper;
 using AzureStorage;
@@ -51,6 +52,12 @@ namespace Lykke.AlgoStore.Service.Logging.Tests.Unit
         public void WriteUserLogWithInstanceIdAndMessageTest()
         {
             _repository.WriteAsync("12345", "Message for 12345").Wait();
+        }
+
+        [Test]
+        public void WriteUserLogWithInstanceIdAndExceptionTest()
+        {
+            _repository.WriteAsync("12345", new Exception("Exception for 12345")).Wait();
         }
     }
 }

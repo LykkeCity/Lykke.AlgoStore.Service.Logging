@@ -52,6 +52,11 @@ namespace Lykke.AlgoStore.Service.Logging.AzureRepositories
             await _table.InsertAsync(entity);
         }
 
+        public async Task WriteAsync(string instanceId, Exception ex)
+        {
+            await WriteAsync(instanceId, ex.ToString());
+        }
+
         private string GenerateRowKey()
         {
             lock (_sync)
