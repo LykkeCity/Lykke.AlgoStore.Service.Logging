@@ -22,7 +22,7 @@ namespace Lykke.AlgoStore.Service.Logging.Tests.Unit
         private IUserLogRepository _repository;
 
         private UserLogEntity _entity;
-        private UserLogRequest _entitytRequest;
+        private UserLogRequest _entityRequest;
 
         [SetUp]
         public void SetUp()
@@ -33,8 +33,8 @@ namespace Lykke.AlgoStore.Service.Logging.Tests.Unit
             Mapper.Initialize(cfg => cfg.AddProfile<AzureRepositories.AutoMapperProfile>());
             Mapper.AssertConfigurationIsValid();
 
-            _entitytRequest = _fixture.Build<UserLogRequest>().Create();
-            _entity = Mapper.Map<UserLogEntity>(_entitytRequest);
+            _entityRequest = _fixture.Build<UserLogRequest>().Create();
+            _entity = Mapper.Map<UserLogEntity>(_entityRequest);
 
             _storage.Setup(x => x.InsertAsync(_entity)).Returns(Task.CompletedTask);
 
@@ -42,9 +42,15 @@ namespace Lykke.AlgoStore.Service.Logging.Tests.Unit
         }
 
         [Test]
-        public void WriteTest()
+        public void WriteUserLogDataTest()
         {
-            _repository.WriteAsync(_entitytRequest).Wait();
+            _repository.WriteAsync(_entityRequest).Wait();
+        }
+
+        [Test]
+        public void WriteUserLogWithInstanceIdAndMessageTest()
+        {
+            _repository.WriteAsync("12345", "Message for 12345").Wait();
         }
     }
 }

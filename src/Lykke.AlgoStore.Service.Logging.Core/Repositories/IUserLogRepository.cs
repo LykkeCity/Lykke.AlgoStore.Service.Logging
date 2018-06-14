@@ -6,5 +6,6 @@ namespace Lykke.AlgoStore.Service.Logging.Core.Repositories
     public interface IUserLogRepository
     {
         Task WriteAsync(IUserLog userLog);
+        Task WriteAsync(string instanceId, string message);
     }
 }
