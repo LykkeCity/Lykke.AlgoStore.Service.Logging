@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Lykke.AlgoStore.Service.Logging.Core.Domain;
 using Lykke.AlgoStore.Service.Logging.Core.Repositories;
 using Lykke.AlgoStore.Service.Logging.Core.Services;
+using Lykke.AlgoStore.Service.Logging.Services.Strings;
 
 namespace Lykke.AlgoStore.Service.Logging.Services
 {
@@ -43,13 +44,13 @@ namespace Lykke.AlgoStore.Service.Logging.Services
         private static void ValidateInstanceId(string instanceId)
         {
             if (string.IsNullOrEmpty(instanceId))
-                throw new ValidationException("InstanceId cannot be empty");
+                throw new ValidationException(Phrases.InstanceIdCannotBeEmpty);
         }
 
         private static void ValidateMessage(string message)
         {
             if (string.IsNullOrEmpty(message))
-                throw new ValidationException("Message cannot be empty");
+                throw new ValidationException(Phrases.MessageCannotBeEmpty);
         }
 
         private static void ValidateException(Exception exception)
