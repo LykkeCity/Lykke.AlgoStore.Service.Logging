@@ -20,5 +20,15 @@ namespace Lykke.AlgoStore.Service.Logging.Services
         {
             await _userLogRepository.WriteAsync(userLog);
         }
+
+        public async Task WriteAsync(string instanceId, string message)
+        {
+            await _userLogRepository.WriteAsync(instanceId, message);
+        }
+
+        public async Task WriteAsync(string instanceId, Exception ex)
+        {
+            await _userLogRepository.WriteAsync(instanceId, ex);
+        }
     }
 }
