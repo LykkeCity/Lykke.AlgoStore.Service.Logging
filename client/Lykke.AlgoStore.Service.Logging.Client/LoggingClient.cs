@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Common.Log;
 using Lykke.Service.Logging.Client.AutorestClient;
+using Lykke.Service.Logging.Client.AutorestClient.Models;
 
 namespace Lykke.AlgoStore.Service.Logging.Client
 {
@@ -22,6 +24,16 @@ namespace Lykke.AlgoStore.Service.Logging.Client
                 return;
             _service.Dispose();
             _service = null;
+        }
+
+        public async Task WriteAsync(UserLogRequest userLog)
+        {
+            await _service.WriteLogAsync(userLog);
+        }
+
+        public async Task WriteAsync(string instanceId, string message)
+        {
+            await _service.WriteMessageAsync(instanceId, message);
         }
     }
 }
