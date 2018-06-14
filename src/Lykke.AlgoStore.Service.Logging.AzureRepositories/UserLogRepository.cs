@@ -32,7 +32,7 @@ namespace Lykke.AlgoStore.Service.Logging.AzureRepositories
         {
             var entity = Mapper.Map<UserLogEntity>(userLog);
 
-            entity.PartitionKey = GeneratePartitionKey(entity.InstanceId);
+            entity.PartitionKey = GeneratePartitionKey(userLog.InstanceId);
             entity.RowKey = GenerateRowKey();
 
             await _table.InsertAsync(entity);

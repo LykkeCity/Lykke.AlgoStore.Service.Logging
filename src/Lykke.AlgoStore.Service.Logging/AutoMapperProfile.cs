@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Lykke.AlgoStore.Service.Logging.Core.Domain;
+using Lykke.AlgoStore.Service.Logging.Requests;
 
 namespace Lykke.AlgoStore.Service.Logging
 {
@@ -6,7 +8,7 @@ namespace Lykke.AlgoStore.Service.Logging
     {
         public AutoMapperProfile()
         {
-            
+            CreateMap<IUserLog, UserLogRequest>();
         }
     }
 }
