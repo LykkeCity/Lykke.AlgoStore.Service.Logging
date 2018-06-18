@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using AzureStorage.Tables;
 using Common.Log;
 using Lykke.AlgoStore.Service.Logging.AzureRepositories;
@@ -9,7 +8,6 @@ using Lykke.AlgoStore.Service.Logging.Core.Services;
 using Lykke.AlgoStore.Service.Logging.Services;
 using Lykke.AlgoStore.Service.Logging.Settings;
 using Lykke.SettingsReader;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Lykke.AlgoStore.Service.Logging.Modules
 {    
