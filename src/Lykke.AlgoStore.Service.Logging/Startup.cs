@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Common.Log;
 using Lykke.AlgoStore.Service.Logging.Settings;
+using Lykke.Common.Api.Contract.Responses;
 using Lykke.Sdk;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +27,25 @@ namespace Lykke.AlgoStore.Service.Logging
         {
             _log = log;
 
-            app.UseLykkeConfiguration();
+            app.UseLykkeConfiguration(ex =>
+            {
+                string errorMessage;
+
+                switch (ex)
+                {
+                    case InvalidOperationException ioe:
+                        errorMessage = $"Invalid operation: {ioe.Message}";
+                        break;
+                    case ValidationException ve:
+                        errorMessage = $"Validation error: {ve.Message}";
+                        break;
+                    default:
+                        errorMessage = "Technical problem";
+                        break;
+                }
+
+                return ErrorResponse.Create(errorMessage);
+            });
 
             ConfigureAutoMapper();
         }
