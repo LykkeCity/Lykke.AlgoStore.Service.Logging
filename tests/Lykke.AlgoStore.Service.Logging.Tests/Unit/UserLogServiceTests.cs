@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoFixture;
 using Lykke.AlgoStore.Service.Logging.Core.Repositories;
@@ -17,19 +19,20 @@ namespace Lykke.AlgoStore.Service.Logging.Tests.Unit
         private readonly Fixture _fixture = new Fixture();
         private IUserLogService _service;
 
-        private UserLogRequest _entitytRequest;
+        private UserLogRequest _entityRequest;
+        private List<UserLogRequest> _entitiesRequest;
 
         [SetUp]
         public void SetUp()
         {
             _service = MockValidUserLogService();
-            _entitytRequest = _fixture.Build<UserLogRequest>().Create();
+            _entityRequest = _fixture.Build<UserLogRequest>().Create();
         }
 
         [Test]
         public void WriteUserLogDataTest()
         {
-            _service.WriteAsync(_entitytRequest).Wait();
+            _service.WriteAsync(_entityRequest).Wait();
         }
 
         [Test]
@@ -78,6 +81,45 @@ namespace Lykke.AlgoStore.Service.Logging.Tests.Unit
         public void WriteUserLogWithInvalidExceptionWillThrowExceptionTest()
         {
             Assert.ThrowsAsync<ArgumentNullException>(() => _service.WriteAsync("12345", ex: null));
+        }
+
+        [Test]
+        public void WriteUserLogsAsNullWillThrowExceptionTest()
+        {
+            _entitiesRequest = null;
+            Assert.ThrowsAsync<ArgumentNullException>(() => _service.WriteAsync(_entitiesRequest));
+        }
+
+        [Test]
+        public void WriteUserLogsWithDifferentInstanceIdsWillThrowExceptionTest()
+        {
+            _entitiesRequest = _fixture.Build<UserLogRequest>().CreateMany().ToList();
+
+            Assert.ThrowsAsync<ValidationException>(() => _service.WriteAsync(_entitiesRequest));
+        }
+
+        [Test]
+        public void WriteUserLogsWithAnyMessageEmptyWillThrowExceptionTest()
+        {
+            _entitiesRequest = _fixture.Build<UserLogRequest>().With(x => x.InstanceId, "TEST").CreateMany().ToList();
+            _entitiesRequest[0].Message = string.Empty;
+
+            Assert.ThrowsAsync<ValidationException>(() => _service.WriteAsync(_entitiesRequest));
+        }
+
+        [Test]
+        public void WriteMoreThenHundredUserLogsWillThrowExceptionTest()
+        {
+            _entitiesRequest = _fixture.Build<UserLogRequest>().With(x => x.InstanceId, "TEST").CreateMany(101).ToList();
+
+            Assert.ThrowsAsync<ValidationException>(() => _service.WriteAsync(_entitiesRequest));
+        }
+
+        [Test]
+        public void WriteUserLogsTest()
+        {
+            _entitiesRequest = _fixture.Build<UserLogRequest>().With(x => x.InstanceId, "TEST").CreateMany().ToList();
+            _service.WriteAsync(_entitiesRequest).Wait();
         }
 
         private static IUserLogService MockValidUserLogService()
