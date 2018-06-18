@@ -61,6 +61,15 @@ namespace Lykke.AlgoStore.Service.Logging.Services.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Neither one of provided messages can be empty.
+        /// </summary>
+        public static string AnyMessageCanNotBeEmpty {
+            get {
+                return ResourceManager.GetString("AnyMessageCanNotBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to InstanceId cannot be empty.
         /// </summary>
         public static string InstanceIdCannotBeEmpty {

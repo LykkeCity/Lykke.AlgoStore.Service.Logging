@@ -12,6 +12,11 @@
     <ProjectReference Include="..\Lykke.AlgoStore.Service.Logging.Core\Lykke.AlgoStore.Service.Logging.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\..\..\..\..\Users\joksa\.nuget\packages\automapper\7.0.0\lib\netstandard2.0\AutoMapper.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="Strings\Phrases.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

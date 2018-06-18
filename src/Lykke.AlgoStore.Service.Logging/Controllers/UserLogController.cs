@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Lykke.AlgoStore.Service.Logging.Core.Services;
 using Lykke.AlgoStore.Service.Logging.Requests;
@@ -33,6 +34,16 @@ namespace Lykke.AlgoStore.Service.Logging.Controllers
         public async Task<IActionResult> WriteMessage(string instanceId, string message)
         {
             await _service.WriteAsync(instanceId, message);
+
+            return NoContent();
+        }
+
+        [HttpPost("writeLogs")]
+        [SwaggerOperation("WriteLogs")]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        public async Task<IActionResult> WriteLogs([FromBody] List<UserLogRequest> userLogs)
+        {
+            await _service.WriteAsync(userLogs);
 
             return NoContent();
         }

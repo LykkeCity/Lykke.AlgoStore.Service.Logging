@@ -103,4 +103,7 @@
   <data name="MessageCannotBeEmpty" xml:space="preserve">
     <value>Message cannot be empty</value>
   </data>
+  <data name="AnyMessageCanNotBeEmpty" xml:space="preserve">
+    <value>Neither one of provided messages can be empty</value>
+  </data>
 </root>

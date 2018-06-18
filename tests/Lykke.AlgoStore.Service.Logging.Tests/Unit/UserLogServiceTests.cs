@@ -35,7 +35,7 @@ namespace Lykke.AlgoStore.Service.Logging.Tests.Unit
         [Test]
         public void WriteUserLogDataAsNullWillThrowExceptionTest()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => _service.WriteAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => _service.WriteAsync(userLog: null));
         }
 
         [Test]

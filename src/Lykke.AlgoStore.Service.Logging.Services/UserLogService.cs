@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Lykke.AlgoStore.Service.Logging.Core.Domain;
@@ -39,6 +41,32 @@ namespace Lykke.AlgoStore.Service.Logging.Services
             ValidateException(ex);
 
             await _userLogRepository.WriteAsync(instanceId, ex);
+        }
+
+        public async Task WriteAsync(IEnumerable<IUserLog> userLogs)
+        {
+            var logs = userLogs.ToList();
+
+            ValidateUserLogs(logs);
+
+            await _userLogRepository.WriteAsync(logs);
+        }
+
+        private static void ValidateUserLogs([NotNull] IEnumerable<IUserLog> userLogs)
+        {
+            if (userLogs == null)
+                throw new ArgumentNullException(nameof(userLogs));
+
+            var logs = userLogs.ToList();
+
+            if(logs.Count > 100)
+                throw new ValidationException("Cannot save more then 100 logs per batch");
+
+            if(logs.Select(x => x.InstanceId).Distinct().Count() > 1)
+                throw new ValidationException("All logs must be with same InstanceId");
+
+            if (logs.Select(x => x.Message).Any(x => x != null && string.IsNullOrEmpty(x)))
+                throw new ValidationException(Phrases.AnyMessageCanNotBeEmpty);
         }
 
         private static void ValidateInstanceId(string instanceId)

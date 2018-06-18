@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using AzureStorage;
 using Lykke.AlgoStore.Service.Logging.AzureRepositories.Entitites;
 using Lykke.AlgoStore.Service.Logging.Core.Domain;
 using Lykke.AlgoStore.Service.Logging.Core.Repositories;
+using Microsoft.WindowsAzure.Storage.Table;
 
 namespace Lykke.AlgoStore.Service.Logging.AzureRepositories
 {
@@ -55,6 +57,22 @@ namespace Lykke.AlgoStore.Service.Logging.AzureRepositories
         public async Task WriteAsync(string instanceId, Exception ex)
         {
             await WriteAsync(instanceId, ex.ToString());
+        }
+
+        public async Task WriteAsync(IEnumerable<IUserLog> userLogs)
+        {
+            var batch = new TableBatchOperation();
+
+            foreach (var userLog in userLogs)
+            {
+                var entity = Mapper.Map<UserLogEntity>(userLog);
+                entity.PartitionKey = GeneratePartitionKey(userLog.InstanceId);
+                entity.RowKey = GenerateRowKey();
+
+                batch.Insert(entity);
+            }
+
+            await _table.DoBatchAsync(batch);
         }
 
         private string GenerateRowKey()
