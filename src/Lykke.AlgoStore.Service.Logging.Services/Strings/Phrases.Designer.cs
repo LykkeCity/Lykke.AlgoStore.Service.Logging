@@ -61,7 +61,7 @@ namespace Lykke.AlgoStore.Service.Logging.Services.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Neither one of provided messages can be empty.
+        ///   Looks up a localized string similar to None of the provided messages can be empty.
         /// </summary>
         public static string AnyMessageCanNotBeEmpty {
             get {
@@ -75,6 +75,24 @@ namespace Lykke.AlgoStore.Service.Logging.Services.Strings {
         public static string InstanceIdCannotBeEmpty {
             get {
                 return ResourceManager.GetString("InstanceIdCannotBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to InstanceId must be the same for all logs.
+        /// </summary>
+        public static string InstanceIdMustBeSameForAllLogs {
+            get {
+                return ResourceManager.GetString("InstanceIdMustBeSameForAllLogs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot save more then 100 log entries per batch.
+        /// </summary>
+        public static string MaxNumberOfLogsPerBatchReached {
+            get {
+                return ResourceManager.GetString("MaxNumberOfLogsPerBatchReached", resourceCulture);
             }
         }
         

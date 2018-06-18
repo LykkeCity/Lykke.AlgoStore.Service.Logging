@@ -104,6 +104,12 @@
     <value>Message cannot be empty</value>
   </data>
   <data name="AnyMessageCanNotBeEmpty" xml:space="preserve">
-    <value>Neither one of provided messages can be empty</value>
+    <value>None of the provided messages can be empty</value>
+  </data>
+  <data name="InstanceIdMustBeSameForAllLogs" xml:space="preserve">
+    <value>InstanceId must be the same for all logs</value>
+  </data>
+  <data name="MaxNumberOfLogsPerBatchReached" xml:space="preserve">
+    <value>Cannot save more then 100 log entries per batch</value>
   </data>
 </root>
