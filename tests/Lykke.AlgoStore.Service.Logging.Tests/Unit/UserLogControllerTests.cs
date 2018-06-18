@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AutoFixture;
@@ -20,6 +22,7 @@ namespace Lykke.AlgoStore.Service.Logging.Tests.Unit
         private Mock<IUserLogService> _serviceMock;
         private UserLogController _controller;
         private UserLogRequest _userLogRequest;
+        private List<UserLogRequest> _userLogsRequest;
 
         [SetUp]
         public void SetUp()
@@ -55,6 +58,16 @@ namespace Lykke.AlgoStore.Service.Logging.Tests.Unit
             var message = Guid.NewGuid().ToString();
 
             var result = _controller.WriteMessage(instanceId, message).Result;
+
+            Assert.IsInstanceOf<NoContentResult>(result);
+        }
+
+        [Test]
+        public void WriteLogsWillReturnCorrectResult()
+        {
+            _userLogsRequest = _fixture.Build<UserLogRequest>().With(x => x.InstanceId, "TEST").CreateMany().ToList();
+
+            var result = _controller.WriteLogs(_userLogsRequest).Result;
 
             Assert.IsInstanceOf<NoContentResult>(result);
         }
