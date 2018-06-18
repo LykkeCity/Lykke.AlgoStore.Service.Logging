@@ -7,6 +7,8 @@
 namespace Lykke.Service.Logging.Client.AutorestClient
 {
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -91,6 +93,29 @@ namespace Lykke.Service.Logging.Client.AutorestClient
             public static async Task WriteMessageAsync(this IAlgoStoreLoggingAPI operations, string instanceId = default(string), string message = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.WriteMessageWithHttpMessagesAsync(instanceId, message, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='userLogs'>
+            /// </param>
+            public static void WriteLogs(this IAlgoStoreLoggingAPI operations, IList<UserLogRequest> userLogs = default(IList<UserLogRequest>))
+            {
+                operations.WriteLogsAsync(userLogs).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='userLogs'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task WriteLogsAsync(this IAlgoStoreLoggingAPI operations, IList<UserLogRequest> userLogs = default(IList<UserLogRequest>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.WriteLogsWithHttpMessagesAsync(userLogs, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

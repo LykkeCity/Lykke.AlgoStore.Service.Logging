@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Common.Log;
@@ -34,6 +35,11 @@ namespace Lykke.AlgoStore.Service.Logging.Client
         public async Task WriteAsync(string instanceId, string message)
         {
             await _service.WriteMessageAsync(instanceId, message);
+        }
+
+        public async Task WriteAsync(IList<UserLogRequest> userLogs)
+        {
+            await _service.WriteLogsAsync(userLogs);
         }
     }
 }
