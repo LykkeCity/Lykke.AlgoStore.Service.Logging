@@ -4,6 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoFixture;
+using FluentAssertions;
+using Lykke.AlgoStore.Service.Logging.AzureRepositories.DTOs;
+using Lykke.AlgoStore.Service.Logging.Core;
+using Lykke.AlgoStore.Service.Logging.Core.Domain;
 using Lykke.AlgoStore.Service.Logging.Core.Repositories;
 using Lykke.AlgoStore.Service.Logging.Core.Services;
 using Lykke.AlgoStore.Service.Logging.Requests;
@@ -21,12 +25,18 @@ namespace Lykke.AlgoStore.Service.Logging.Tests.Unit
 
         private UserLogRequest _entityRequest;
         private List<UserLogRequest> _entitiesRequest;
+        private List<IUserLog> _data;
 
         [SetUp]
         public void SetUp()
         {
-            _service = MockValidUserLogService();
+            _data = new List<IUserLog>();
+            var dtoData = _fixture.Build<UserLogDto>().With(x => x.InstanceId, "TEST").CreateMany();
+            _data.AddRange(dtoData);
+
             _entityRequest = _fixture.Build<UserLogRequest>().Create();
+
+            _service = MockValidUserLogService();
         }
 
         [Test]
@@ -122,20 +132,46 @@ namespace Lykke.AlgoStore.Service.Logging.Tests.Unit
             _service.WriteAsync(_entitiesRequest).Wait();
         }
 
-        private static IUserLogService MockValidUserLogService()
+        [Test]
+        public void GetTailLogTest()
+        {
+            var result = _service.GetTailLog(10, "TEST").Result;
+
+            for (int i = 0; i < _data.Count; i++)
+            {
+                Assert.AreEqual($"[{_data[i].Date.ToString(Constants.CustomDateTimeFormat)}] {_data[i].Message}",
+                    result[i]);
+            }
+        }
+
+        [Test]
+        public void GetTailLogWithInvalidLimitWillThrowExceptionTest()
+        {
+            Assert.ThrowsAsync<ValidationException>(() => _service.GetTailLog(0, "TEST"));
+        }
+
+        [Test]
+        public void GetTailLogWithInvalidInstanceIdWillThrowExceptionTest()
+        {
+            Assert.ThrowsAsync<ValidationException>(() => _service.GetTailLog(10, ""));
+        }
+
+        private IUserLogService MockValidUserLogService()
         {
             var userLogRepository = MockValidUserLogRepository();
 
             return new UserLogService(userLogRepository);
         }
 
-        private static IUserLogRepository MockValidUserLogRepository()
+        private IUserLogRepository MockValidUserLogRepository()
         {
             var repo = new Mock<IUserLogRepository>();
 
             repo.Setup(x => x.WriteAsync(It.IsAny<UserLogRequest>())).Returns(Task.CompletedTask);
             repo.Setup(x => x.WriteAsync(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.CompletedTask);
             repo.Setup(x => x.WriteAsync(It.IsAny<string>(), It.IsAny<Exception>())).Returns(Task.CompletedTask);
+            repo.Setup(x => x.GetAsync(It.IsAny<int>(), It.IsAny<string>()))
+                .Returns(Task.FromResult(_data.AsEnumerable()));
 
             return repo.Object;
         }

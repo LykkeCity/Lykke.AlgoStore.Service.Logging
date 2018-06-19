@@ -88,6 +88,15 @@ namespace Lykke.AlgoStore.Service.Logging.Services.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of returned log records must be greater then 0.
+        /// </summary>
+        public static string LogNumberOfReturnedRecordsLimitReached {
+            get {
+                return ResourceManager.GetString("LogNumberOfReturnedRecordsLimitReached", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot save more then 100 log entries per batch.
         /// </summary>
         public static string MaxNumberOfLogsPerBatchReached {

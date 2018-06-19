@@ -112,4 +112,7 @@
   <data name="MaxNumberOfLogsPerBatchReached" xml:space="preserve">
     <value>Cannot save more then 100 log entries per batch</value>
   </data>
+  <data name="LogNumberOfReturnedRecordsLimitReached" xml:space="preserve">
+    <value>Number of returned log records must be greater then 0</value>
+  </data>
 </root>

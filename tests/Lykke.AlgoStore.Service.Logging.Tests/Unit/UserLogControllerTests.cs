@@ -70,5 +70,15 @@ namespace Lykke.AlgoStore.Service.Logging.Tests.Unit
 
             Assert.IsInstanceOf<NoContentResult>(result);
         }
+
+        [Test]
+        public void GetTailLogWillReturnCorrectResult()
+        {
+            var tailLogRequest = _fixture.Build<TailLogRequest>().With(x => x.InstanceId, "TEST").Create();
+
+            var result = _controller.GetTailLog(tailLogRequest).Result;
+
+            Assert.IsInstanceOf<NoContentResult>(result);
+        }
     }
 }
