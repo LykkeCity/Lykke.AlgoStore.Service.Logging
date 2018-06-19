@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Lykke.AlgoStore.Service.Logging.Core.Services;
 using Lykke.AlgoStore.Service.Logging.Requests;
+using Lykke.AlgoStore.Service.Logging.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -46,6 +47,14 @@ namespace Lykke.AlgoStore.Service.Logging.Controllers
             await _service.WriteAsync(userLogs);
 
             return NoContent();
+        }
+
+        [HttpGet("tailLog")]
+        [SwaggerOperation("GetTailLog")]
+        [ProducesResponseType(typeof(TailLogResponse), (int) HttpStatusCode.OK)]
+        public async Task<IActionResult> GetTailLog(TailLogRequest tailLog)
+        {
+            return Ok();
         }
     }
 }

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Lykke.AlgoStore.Service.Logging.Core;
 using Lykke.AlgoStore.Service.Logging.Core.Domain;
 using Lykke.AlgoStore.Service.Logging.Core.Repositories;
 using Lykke.AlgoStore.Service.Logging.Core.Services;
@@ -50,6 +51,13 @@ namespace Lykke.AlgoStore.Service.Logging.Services
             ValidateUserLogs(logs);
 
             await _userLogRepository.WriteAsync(logs);
+        }
+
+        public async Task<string[]> GetTailLog(int limit, string instanceId)
+        {
+            var userLogs = await _userLogRepository.GetAsync(limit, instanceId);
+
+            return userLogs.Select(l => $"[{l.Date.ToString(Constants.CustomDateTimeFormat)}] {l.Message}").ToArray();
         }
 
         private static void ValidateUserLogs([NotNull] IEnumerable<IUserLog> userLogs)

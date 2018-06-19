@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using AzureStorage;
+using Lykke.AlgoStore.Service.Logging.AzureRepositories.DTOs;
 using Lykke.AlgoStore.Service.Logging.AzureRepositories.Entitites;
 using Lykke.AlgoStore.Service.Logging.Core.Domain;
 using Lykke.AlgoStore.Service.Logging.Core.Repositories;
@@ -73,6 +74,19 @@ namespace Lykke.AlgoStore.Service.Logging.AzureRepositories
             }
 
             await _table.DoBatchAsync(batch);
+        }
+
+        public async Task<IEnumerable<IUserLog>> GetAsync(int limit, string instanceId)
+        {
+            var query = new TableQuery<UserLogEntity>()
+                .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, GeneratePartitionKey(instanceId)))
+                .Take(limit);
+
+            var result = new List<UserLogDto>();
+
+            await _table.ExecuteAsync(query, items => result.AddRange(Mapper.Map<IEnumerable<UserLogDto>>(items)), () => false);
+
+            return result;
         }
 
         private string GenerateRowKey()

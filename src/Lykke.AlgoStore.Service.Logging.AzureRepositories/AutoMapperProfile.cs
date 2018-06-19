@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Lykke.AlgoStore.Service.Logging.AzureRepositories.DTOs;
 using Lykke.AlgoStore.Service.Logging.AzureRepositories.Entitites;
 using Lykke.AlgoStore.Service.Logging.Core.Domain;
 using Microsoft.WindowsAzure.Storage.Table;
@@ -24,6 +25,7 @@ namespace Lykke.AlgoStore.Service.Logging.AzureRepositories
             });
 
             //From entities (to custom DTOs if necessary)
+            CreateMap<UserLogEntity, UserLogDto>();
         }
     }
 }
