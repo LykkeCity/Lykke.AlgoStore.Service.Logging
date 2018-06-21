@@ -11,6 +11,6 @@ namespace Lykke.AlgoStore.Service.Logging.Core.Services
         Task WriteAsync(string instanceId, string message);
         Task WriteAsync(string instanceId, Exception ex);
         Task WriteAsync(IEnumerable<IUserLog> userLogMessages);
-        Task<string[]> GetTailLog(int tail, string instanceId);
+        Task<IEnumerable<IUserLog>> GetTailLog(int tail, string instanceId);
     }
 }

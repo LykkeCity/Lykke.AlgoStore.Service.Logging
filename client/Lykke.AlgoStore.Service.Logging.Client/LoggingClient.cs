@@ -41,5 +41,10 @@ namespace Lykke.AlgoStore.Service.Logging.Client
         {
             await _service.WriteLogsAsync(userLogs);
         }
+
+        public async Task<IList<UserLogResponse>> GetTailLog(int tail, string instanceId)
+        {
+            return await _service.GetTailLogAsync(tail, instanceId);
+        }
     }
 }

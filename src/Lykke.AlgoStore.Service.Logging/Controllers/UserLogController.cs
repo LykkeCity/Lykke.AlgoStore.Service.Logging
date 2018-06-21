@@ -51,10 +51,12 @@ namespace Lykke.AlgoStore.Service.Logging.Controllers
 
         [HttpGet("tailLog")]
         [SwaggerOperation("GetTailLog")]
-        [ProducesResponseType(typeof(TailLogResponse), (int) HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(IEnumerable<UserLogResponse>), (int) HttpStatusCode.OK)]
         public async Task<IActionResult> GetTailLog(TailLogRequest tailLog)
         {
-            return Ok();
+            var result = await _service.GetTailLog(tailLog.Tail, tailLog.InstanceId);
+
+            return Ok(result);
         }
     }
 }

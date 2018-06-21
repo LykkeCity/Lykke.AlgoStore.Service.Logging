@@ -53,14 +53,12 @@ namespace Lykke.AlgoStore.Service.Logging.Services
             await _userLogRepository.WriteAsync(logs);
         }
 
-        public async Task<string[]> GetTailLog(int limit, string instanceId)
+        public async Task<IEnumerable<IUserLog>> GetTailLog(int limit, string instanceId)
         {
             ValidateInstanceId(instanceId);
             ValidateLimit(limit);
 
-            var userLogs = await _userLogRepository.GetAsync(limit, instanceId);
-
-            return userLogs.Select(l => $"[{l.Date.ToString(Constants.CustomDateTimeFormat)}] {l.Message}").ToArray();
+            return await _userLogRepository.GetAsync(limit, instanceId);
         }
 
         private static void ValidateLimit(int limit)
