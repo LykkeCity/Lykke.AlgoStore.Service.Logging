@@ -1,7 +1,9 @@
-﻿namespace Lykke.AlgoStore.Service.Logging.Responses
+﻿using System.Collections.Generic;
+
+namespace Lykke.AlgoStore.Service.Logging.Responses
 {
     public class TailLogResponse
     {
-        public string[] Log { get; set; }
+        public List<UserLogResponse> Log { get; set; }
     }
 }

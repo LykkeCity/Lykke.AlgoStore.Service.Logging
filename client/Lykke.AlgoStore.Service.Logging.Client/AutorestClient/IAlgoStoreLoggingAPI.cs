@@ -87,7 +87,7 @@ namespace Lykke.Service.Logging.Client.AutorestClient
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<TailLogResponse>> GetTailLogWithHttpMessagesAsync(int tail, string instanceId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<UserLogResponse>>> GetTailLogWithHttpMessagesAsync(int tail, string instanceId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

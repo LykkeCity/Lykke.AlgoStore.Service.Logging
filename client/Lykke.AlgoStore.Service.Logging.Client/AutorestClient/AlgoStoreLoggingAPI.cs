@@ -619,7 +619,7 @@ namespace Lykke.Service.Logging.Client.AutorestClient
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<TailLogResponse>> GetTailLogWithHttpMessagesAsync(int tail, string instanceId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<UserLogResponse>>> GetTailLogWithHttpMessagesAsync(int tail, string instanceId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -705,7 +705,7 @@ namespace Lykke.Service.Logging.Client.AutorestClient
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<TailLogResponse>();
+            var _result = new HttpOperationResponse<IList<UserLogResponse>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -714,7 +714,7 @@ namespace Lykke.Service.Logging.Client.AutorestClient
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<TailLogResponse>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<IList<UserLogResponse>>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

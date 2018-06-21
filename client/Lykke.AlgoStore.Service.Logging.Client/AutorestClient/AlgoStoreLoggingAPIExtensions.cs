@@ -125,7 +125,7 @@ namespace Lykke.Service.Logging.Client.AutorestClient
             /// </param>
             /// <param name='instanceId'>
             /// </param>
-            public static TailLogResponse GetTailLog(this IAlgoStoreLoggingAPI operations, int tail, string instanceId = default(string))
+            public static IList<UserLogResponse> GetTailLog(this IAlgoStoreLoggingAPI operations, int tail, string instanceId = default(string))
             {
                 return operations.GetTailLogAsync(tail, instanceId).GetAwaiter().GetResult();
             }
@@ -140,7 +140,7 @@ namespace Lykke.Service.Logging.Client.AutorestClient
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TailLogResponse> GetTailLogAsync(this IAlgoStoreLoggingAPI operations, int tail, string instanceId = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<UserLogResponse>> GetTailLogAsync(this IAlgoStoreLoggingAPI operations, int tail, string instanceId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetTailLogWithHttpMessagesAsync(tail, instanceId, null, cancellationToken).ConfigureAwait(false))
                 {

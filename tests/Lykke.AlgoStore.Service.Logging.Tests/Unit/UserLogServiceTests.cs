@@ -137,11 +137,7 @@ namespace Lykke.AlgoStore.Service.Logging.Tests.Unit
         {
             var result = _service.GetTailLog(10, "TEST").Result;
 
-            for (int i = 0; i < _data.Count; i++)
-            {
-                Assert.AreEqual($"[{_data[i].Date.ToString(Constants.CustomDateTimeFormat)}] {_data[i].Message}",
-                    result[i]);
-            }
+            Assert.IsNotEmpty(result);
         }
 
         [Test]
