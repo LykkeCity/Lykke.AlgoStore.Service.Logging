@@ -77,5 +77,17 @@ namespace Lykke.Service.Logging.Client.AutorestClient
         /// </param>
         Task<HttpOperationResponse> WriteLogsWithHttpMessagesAsync(IList<UserLogRequest> userLogs = default(IList<UserLogRequest>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <param name='tail'>
+        /// </param>
+        /// <param name='instanceId'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<TailLogResponse>> GetTailLogWithHttpMessagesAsync(int tail, string instanceId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
     }
 }

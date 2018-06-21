@@ -118,5 +118,35 @@ namespace Lykke.Service.Logging.Client.AutorestClient
                 (await operations.WriteLogsWithHttpMessagesAsync(userLogs, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='tail'>
+            /// </param>
+            /// <param name='instanceId'>
+            /// </param>
+            public static TailLogResponse GetTailLog(this IAlgoStoreLoggingAPI operations, int tail, string instanceId = default(string))
+            {
+                return operations.GetTailLogAsync(tail, instanceId).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='tail'>
+            /// </param>
+            /// <param name='instanceId'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TailLogResponse> GetTailLogAsync(this IAlgoStoreLoggingAPI operations, int tail, string instanceId = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetTailLogWithHttpMessagesAsync(tail, instanceId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }
