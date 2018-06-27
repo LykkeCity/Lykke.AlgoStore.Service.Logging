@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Common.Log;
+using Lykke.AlgoStore.CSharp.AlgoTemplate.Models.Mapper;
 using Lykke.AlgoStore.Security.InstanceAuth;
 using Lykke.AlgoStore.Service.Logging.Filters;
 using Lykke.AlgoStore.Service.Logging.Settings;
@@ -79,6 +80,7 @@ namespace Lykke.AlgoStore.Service.Logging
                 {
                     cfg.AddProfiles(typeof(AutoMapperProfile));
                     cfg.AddProfiles(typeof(AzureRepositories.AutoMapperProfile));
+                    cfg.AddProfiles(typeof(AutoMapperModelProfile));
                 });
 
                 Mapper.AssertConfigurationIsValid();
