@@ -27,24 +27,34 @@ namespace Lykke.AlgoStore.Service.Logging.Client
             _service = null;
         }
 
-        public async Task WriteAsync(UserLogRequest userLog)
+        public async Task WriteAsync(UserLogRequest userLog, string instanceAuthToken)
         {
-            await _service.WriteLogAsync(userLog);
+            await _service.WriteLogWithHttpMessagesAsync(userLog, SetAutorizationToken(instanceAuthToken));
         }
 
-        public async Task WriteAsync(string instanceId, string message)
+        public async Task WriteAsync(string instanceId, string message, string instanceAuthToken)
         {
-            await _service.WriteMessageAsync(instanceId, message);
+            await _service.WriteMessageWithHttpMessagesAsync(instanceId, message, SetAutorizationToken(instanceAuthToken));
         }
 
-        public async Task WriteAsync(IList<UserLogRequest> userLogs)
+        public async Task WriteAsync(IList<UserLogRequest> userLogs, string instanceAuthToken)
         {
-            await _service.WriteLogsAsync(userLogs);
+            await _service.WriteLogsWithHttpMessagesAsync(userLogs, SetAutorizationToken(instanceAuthToken));
         }
 
-        public async Task<IList<UserLogResponse>> GetTailLog(int tail, string instanceId)
+        public async Task<IList<UserLogResponse>> GetTailLog(int tail, string instanceId, string instanceAuthToken)
         {
-            return await _service.GetTailLogAsync(tail, instanceId);
+            return (await _service
+                .GetTailLogWithHttpMessagesAsync(tail, instanceId, SetAutorizationToken(instanceAuthToken))
+                .ConfigureAwait(false)).Body;
+        }
+
+        private Dictionary<string, List<string>> SetAutorizationToken(string authToken)
+        {
+            var result = new Dictionary<string, List<string>>
+                {{"Authorization", new List<string>() {"Bearer " + authToken}}};
+
+            return result;
         }
     }
 }
