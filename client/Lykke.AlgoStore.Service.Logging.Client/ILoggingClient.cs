@@ -7,9 +7,9 @@ namespace Lykke.AlgoStore.Service.Logging.Client
 {
     public interface ILoggingClient
     {
-        Task WriteAsync(UserLogRequest userLog);
-        Task WriteAsync(string instanceId, string message);
-        Task WriteAsync(IList<UserLogRequest> userLogs);
-        Task<IList<UserLogResponse>> GetTailLog(int tail, string instanceId);
+        Task WriteAsync(UserLogRequest userLog, string instanceAuthtoken);
+        Task WriteAsync(string instanceId, string message, string instanceAuthtoken);
+        Task WriteAsync(IList<UserLogRequest> userLogs, string instanceAuthtoken);
+        Task<IList<UserLogResponse>> GetTailLog(int tail, string instanceId, string instanceAuthtoken);
     }
 }

@@ -4,11 +4,13 @@ using System.Threading.Tasks;
 using Lykke.AlgoStore.Service.Logging.Core.Services;
 using Lykke.AlgoStore.Service.Logging.Requests;
 using Lykke.AlgoStore.Service.Logging.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Lykke.AlgoStore.Service.Logging.Controllers
 {
+    [Authorize]
     [Route("api/v1/userLog")]
     public class UserLogController : Controller
     {

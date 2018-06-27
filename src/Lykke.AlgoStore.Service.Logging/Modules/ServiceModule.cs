@@ -1,13 +1,15 @@
 ﻿using Autofac;
 using AzureStorage.Tables;
 using Common.Log;
-using Lykke.AlgoStore.Service.Logging.AzureRepositories;
+using Lykke.AlgoStore.CSharp.AlgoTemplate.Models;
+using Lykke.AlgoStore.CSharp.AlgoTemplate.Models.Repositories;
 using Lykke.AlgoStore.Service.Logging.AzureRepositories.Entitites;
-using Lykke.AlgoStore.Service.Logging.Core.Repositories;
 using Lykke.AlgoStore.Service.Logging.Core.Services;
 using Lykke.AlgoStore.Service.Logging.Services;
 using Lykke.AlgoStore.Service.Logging.Settings;
 using Lykke.SettingsReader;
+using IUserLogRepository = Lykke.AlgoStore.Service.Logging.Core.Repositories.IUserLogRepository;
+using UserLogRepository = Lykke.AlgoStore.Service.Logging.AzureRepositories.UserLogRepository;
 
 namespace Lykke.AlgoStore.Service.Logging.Modules
 {    
@@ -15,13 +17,11 @@ namespace Lykke.AlgoStore.Service.Logging.Modules
     {
         private readonly IReloadingManager<AppSettings> _appSettings;
         private readonly ILog _log;
-        //private readonly IServiceCollection _services;
 
         public ServiceModule(IReloadingManager<AppSettings> appSettings, ILog log)
         {
             _appSettings = appSettings;
             _log = log;
-            //_services = new ServiceCollection();
         }
 
         protected override void Load(ContainerBuilder builder)
@@ -34,11 +34,13 @@ namespace Lykke.AlgoStore.Service.Logging.Modules
 
             builder.RegisterType<UserLogRepository>().As<IUserLogRepository>();
 
+            builder.RegisterInstance<IAlgoClientInstanceRepository>(
+                    AzureRepoFactories.CreateAlgoClientInstanceRepository(reloadingDbManager, _log))
+                .SingleInstance();
+
             builder.RegisterType<UserLogService>()
                 .As<IUserLogService>()
                 .SingleInstance();
-
-            //builder.Populate(_services);
         }
     }
 }
