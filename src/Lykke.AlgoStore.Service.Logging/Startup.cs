@@ -34,7 +34,7 @@ namespace Lykke.AlgoStore.Service.Logging
         {
             var appSettings = Configuration.LoadSettings<AppSettings>();
 
-            services.AddInstanceAuthentication(appSettings.CurrentValue.AlgoStoreLoggingService.LoggingServiceCache);
+            services.AddInstanceAuthentication(appSettings.CurrentValue.AlgoStoreLoggingService.LoggingServiceAuth);
 
             return services.BuildServiceProvider<AppSettings>(options =>
             {
