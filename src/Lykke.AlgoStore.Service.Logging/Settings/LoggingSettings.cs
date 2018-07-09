@@ -7,6 +7,6 @@ namespace Lykke.AlgoStore.Service.Logging.Settings
     public class LoggingSettings
     {
         public DbSettings Db { get; set; }
-        public InstanceCacheSettings LoggingServiceCache { get; set; }
+        public InstanceAuthSettings LoggingServiceAuth { get; set; }
     }
 }
