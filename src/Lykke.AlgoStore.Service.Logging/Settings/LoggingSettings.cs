@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using Lykke.AlgoStore.Security.InstanceAuth;
 
 namespace Lykke.AlgoStore.Service.Logging.Settings
 {
@@ -6,5 +7,6 @@ namespace Lykke.AlgoStore.Service.Logging.Settings
     public class LoggingSettings
     {
         public DbSettings Db { get; set; }
+        public InstanceAuthSettings LoggingServiceAuth { get; set; }
     }
 }
