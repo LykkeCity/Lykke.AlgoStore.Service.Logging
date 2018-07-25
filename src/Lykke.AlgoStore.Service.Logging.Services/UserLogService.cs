@@ -75,10 +75,10 @@ namespace Lykke.AlgoStore.Service.Logging.Services
             var logs = userLogs.ToList();
 
             if(logs.Count > 100)
-                throw new ValidationException(Phrases.InstanceIdMustBeSameForAllLogs);
+                throw new ValidationException(Phrases.MaxNumberOfLogsPerBatchReached);
 
             if(logs.Select(x => x.InstanceId).Distinct().Count() > 1)
-                throw new ValidationException(Phrases.MaxNumberOfLogsPerBatchReached);
+                throw new ValidationException(Phrases.InstanceIdMustBeSameForAllLogs);
 
             if (logs.Select(x => x.Message).Any(x => x != null && string.IsNullOrEmpty(x)))
                 throw new ValidationException(Phrases.AnyMessageCanNotBeEmpty);
