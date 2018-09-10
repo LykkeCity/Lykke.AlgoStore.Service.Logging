@@ -6,7 +6,7 @@
     <Version>1.0.0</Version>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Lykke.Common" Version="6.8.6" />
+    <PackageReference Include="Lykke.Common" Version="7.0.4" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lykke.AlgoStore.Service.Logging.Core\Lykke.AlgoStore.Service.Logging.Core.csproj" />
